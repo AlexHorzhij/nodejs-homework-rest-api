@@ -1,4 +1,3 @@
-// const operationsContacts = require('../../models/contacts');
 const { Contacts } = require('../../models/schema');
 const createError = require('http-errors');
 

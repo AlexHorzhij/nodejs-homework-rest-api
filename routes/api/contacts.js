@@ -5,7 +5,7 @@ const { contacts: ctrl } = require('../../controlers');
 const {
   contactsAddSchema,
   contactsUpdateSchema,
-} = require('../../models/schema');
+} = require('../../middlewares');
 
 const {
   contactValidation: validation,
