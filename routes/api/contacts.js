@@ -5,7 +5,7 @@ const { contacts: ctrl } = require('../../controlers');
 const {
   contactsAddSchema,
   contactsUpdateSchema,
-} = require('../../schemas/schema');
+} = require('../../middlewares');
 
 const {
   contactValidation: validation,
@@ -24,6 +24,12 @@ router.put(
   '/:contactId',
   validation(contactsUpdateSchema),
   controlerWrapper(ctrl.updateById)
+);
+
+router.patch(
+  '/:contactId',
+  validation(contactsUpdateSchema),
+  controlerWrapper(ctrl.updateStatusContact)
 );
 
 module.exports = router;

@@ -1,11 +1,11 @@
-const operationsContacts = require('../../models/contacts');
 const createError = require('http-errors');
+const { Contacts } = require('../../models/schema');
 
 const updateById = async (req, res, next) => {
   const { contactId } = req.params;
   const newContact = req.body;
 
-  const updatedContact = await operationsContacts.updateContact(
+  const updatedContact = await Contacts.findByIdAndUpdate(
     contactId,
     newContact
   );
