@@ -1,10 +1,10 @@
 const createError = require('http-errors');
 
-const contactValidation = schema => {
+const schemaVlidation = schema => {
   return (req, res, next) => {
-    const newContact = req.body;
+    const newData = req.body;
 
-    const { error } = schema.validate(newContact);
+    const { error } = schema.validate(newData);
 
     if (error) {
       throw new createError.BadRequest(error.message);
@@ -13,4 +13,4 @@ const contactValidation = schema => {
   };
 };
 
-module.exports = contactValidation;
+module.exports = schemaVlidation;

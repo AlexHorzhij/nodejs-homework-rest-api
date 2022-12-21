@@ -1,37 +1,43 @@
 const { Schema, model } = require('mongoose');
 
-const mongoosSchema = new Schema({
-  name: { type: String, required: [true, 'Set name for contact'] },
-  email: { type: String },
-  phone: { type: String },
+const contactsSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, 'Set name for contact'],
+    unique: true,
+  },
+  email: { type: String, unique: true },
+  phone: { type: String, unique: true },
   favorite: { type: Boolean, default: false },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+  },
 });
 
-const Contacts = model('contact', mongoosSchema);
+const Contacts = model('contact', contactsSchema);
 
-//    -----Joi Schema-----
+const userSchema = new Schema({
+  password: {
+    type: String,
+    required: [true, 'Set password for user'],
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
+  },
+  subscription: {
+    type: String,
+    enum: ['starter', 'pro', 'business'],
+    default: 'starter',
+  },
+  token: String,
+});
 
-// const contact = {
-//   name: Joi.string(),
-//   email: Joi.string().email(),
-//   phone: Joi.string().pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/),
-//   favorite: Joi.boolean(),
-// };
-
-// const contactsAddSchema = Joi.object({
-//   name: contact.name.required(),
-//   email: contact.email.required(),
-//   phone: contact.phone.required(),
-//   favorite: contact.favorite,
-// });
-
-// const contactsUpdateSchema = Joi.object({
-//   name: contact.name.optional(),
-//   email: contact.email.optional(),
-//   phone: contact.phone.optional(),
-//   favorite: contact.favorite,
-// });
+const Users = model('user', userSchema);
 
 module.exports = {
   Contacts,
+  Users,
 };
