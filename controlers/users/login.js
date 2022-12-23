@@ -1,15 +1,14 @@
-const { Users } = require('../../models/schema');
+const { Users } = require('../../models');
 const createError = require('http-errors');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
 const login = async (req, res) => {
-  const { email, password, subscription } = req.body;
-  const user = await Users.findOne({ email });
+  const { email, password } = req.body;
 
+  const user = await Users.findOne({ email });
   const checkPassword = bcryptjs.compareSync(password, user.password);
 
-  console.log(checkPassword);
   if (!user || !checkPassword) {
     throw createError.Unauthorized('Wrong password or email, try again');
   }
@@ -29,7 +28,7 @@ const login = async (req, res) => {
       token: token,
       user: {
         email: email,
-        subscription: subscription,
+        subscription: user.subscription,
       },
     },
   });

@@ -1,4 +1,4 @@
-const { Users } = require('../../models/schema');
+const { Users } = require('../../models');
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
 
@@ -21,6 +21,7 @@ const register = async (req, res) => {
     data: {
       user: {
         email: result.email,
+        id: result._id,
         subscription: result.subscription,
       },
     },

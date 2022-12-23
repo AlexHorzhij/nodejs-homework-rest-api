@@ -1,4 +1,4 @@
-const { Contacts } = require('../../models/schema');
+const { Contacts } = require('../../models');
 
 const add = async (req, res, next) => {
   const { _id } = req.user;

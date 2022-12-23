@@ -1,4 +1,4 @@
-const { Users } = require('../models/schema');
+const { Users } = require('../models');
 const { Unauthorized } = require('http-errors');
 const jws = require('jsonwebtoken');
 

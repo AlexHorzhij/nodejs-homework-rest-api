@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const { Users } = require('../../models/schema');
+const { Users } = require('../../models');
 
 const updateSubscription = async (req, res, next) => {
   const { userId } = req.params;

@@ -1,4 +1,4 @@
-const { Users } = require('../../models/schema');
+const { Users } = require('../../models');
 
 const logout = async (res, req) => {
   const { _id } = res.user;

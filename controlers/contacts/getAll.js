@@ -1,27 +1,22 @@
-const { Contacts } = require('../../models/schema');
+const { Contacts } = require('../../models');
 
 const getAll = async (req, res, next) => {
   const { _id } = req.user;
-  const { page, limit, favorite } = req.query;
-  const result = await Contacts.find({ owner: _id });
-
-  let resultPagination = result;
-  if (page !== undefined || limit !== undefined) {
-    resultPagination = result.filter(
-      (_, index) => index >= (page - 1) * limit && index <= page * limit - 1
-    );
-  }
+  const { page = 1, limit = 10, favorite } = req.query;
+  const skip = (page - 1) * limit;
+  let result = await Contacts.find({ owner: _id }, '', {
+    skip,
+    limit: Number(limit),
+  }).populate('owner', 'email subscription');
 
   if (favorite !== undefined) {
-    resultPagination = resultPagination.filter(
-      item => String(item.favorite) === String(favorite)
-    );
+    result = result.filter(item => String(item.favorite) === String(favorite));
   }
 
   res.json({
     status: 'success',
     code: 200,
-    data: resultPagination,
+    data: result,
   });
 };
 
