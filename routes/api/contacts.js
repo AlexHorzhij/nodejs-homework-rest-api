@@ -5,23 +5,30 @@ const { contacts: ctrl } = require('../../controlers');
 const {
   contactsAddSchema,
   contactsUpdateSchema,
+  auth,
 } = require('../../middlewares');
 
 const {
-  contactValidation: validation,
+  schemaVlidation: validation,
   controlerWrapper,
 } = require('../../middlewares');
 
-router.get('/', controlerWrapper(ctrl.getAll));
+router.get('/', auth, controlerWrapper(ctrl.getAll));
 
-router.get('/:contactId', controlerWrapper(ctrl.getById));
+router.get('/:contactId', auth, controlerWrapper(ctrl.getById));
 
-router.post('/', validation(contactsAddSchema), controlerWrapper(ctrl.add));
+router.post(
+  '/',
+  auth,
+  validation(contactsAddSchema),
+  controlerWrapper(ctrl.add)
+);
 
-router.delete('/:contactId', controlerWrapper(ctrl.removeById));
+router.delete('/:contactId', auth, controlerWrapper(ctrl.removeById));
 
 router.put(
   '/:contactId',
+  auth,
   validation(contactsUpdateSchema),
   controlerWrapper(ctrl.updateById)
 );

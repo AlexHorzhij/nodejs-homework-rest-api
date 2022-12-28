@@ -1,7 +1,17 @@
-const { Contacts } = require('../../models/schema');
+const { Contacts } = require('../../models');
 
 const getAll = async (req, res, next) => {
-  const result = await Contacts.find({});
+  const { _id } = req.user;
+  const { page = 1, limit = 10, favorite } = req.query;
+  const skip = (page - 1) * limit;
+  let result = await Contacts.find({ owner: _id }, '', {
+    skip,
+    limit: Number(limit),
+  }).populate('owner', 'email subscription');
+
+  if (favorite !== undefined) {
+    result = result.filter(item => String(item.favorite) === String(favorite));
+  }
 
   res.json({
     status: 'success',
