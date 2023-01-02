@@ -5,8 +5,8 @@ const bcryptjs = require('bcryptjs');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-
   const user = await Users.findOne({ email });
+
   const checkPassword = bcryptjs.compareSync(password, user.password);
 
   if (!user || !checkPassword) {
