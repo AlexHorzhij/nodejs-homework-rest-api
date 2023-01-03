@@ -1,4 +1,4 @@
-const checkExistance = require('./checkFolderExistance');
+const checkExistance = require('./checkExistance');
 const createNewFolder = require('./createNewFolder');
 const createFoldersForAvatar = require('./createFoldersForAvatar');
 

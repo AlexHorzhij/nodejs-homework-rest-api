@@ -4,12 +4,10 @@ const { Conflict } = require('http-errors');
 const add = async (req, res, next) => {
   const { _id } = req.user;
   const { name } = req.body;
-  // const { path: tempPath, originalname } = req.file;
-  const doubleUser = await Contacts.find({ owner: _id, name });
-  console.log('req.file', req.file);
+  const existingUser = await Contacts.findOne({ owner: _id, name });
 
-  if (doubleUser.length !== 0) {
-    throw new Conflict(`Contact with name ${req.body.name} exist`);
+  if (existingUser) {
+    throw new Conflict(`Contact with name ${name} exist`);
   }
   const result = await Contacts.create({
     ...req.body,

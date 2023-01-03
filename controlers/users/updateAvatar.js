@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 const Jimp = require('jimp');
-const { UnsupportedMediaType, BadRequest } = require('http-errors');
+const { UnsupportedMediaType, BadRequest, NotFound } = require('http-errors');
 const { Users } = require('../../models');
 
 const updateAvatar = async (req, res) => {
@@ -28,7 +28,11 @@ const updateAvatar = async (req, res) => {
 
   const result = await Users.findByIdAndUpdate(_id, { avatarURL: avatarPath });
   const deleteAvatar = path.join(process.cwd(), 'public', result.avatarURL);
-  await fs.unlink(deleteAvatar);
+  try {
+    await fs.unlink(deleteAvatar);
+  } catch (error) {
+    throw new NotFound('Not found avatar for deleting');
+  }
 
   res.status(200).json({
     status: 'success',

@@ -1,4 +1,4 @@
-const checkExistance = require('./checkFolderExistance');
+const checkExistance = require('./checkExistance');
 const fs = require('fs/promises');
 
 const createNewFolder = async folderPath => {

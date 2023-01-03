@@ -30,7 +30,7 @@ router.patch(
   '/avatar',
   auth,
   upload.single('avatar'),
-  // schemaVlidation(updateSchema),
+  schemaVlidation(updateSchema),
   controlerWrapper(ctrl.updateAvatar)
 );
 
