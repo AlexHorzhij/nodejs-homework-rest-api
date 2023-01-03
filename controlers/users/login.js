@@ -12,7 +12,6 @@ const login = async (req, res) => {
   if (!user || !checkPassword) {
     throw createError.Unauthorized('Wrong password or email, try again');
   }
-
   const { SECRET_KEY } = process.env;
   const payload = {
     id: user._id,
