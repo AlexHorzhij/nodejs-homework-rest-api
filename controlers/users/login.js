@@ -5,14 +5,13 @@ const bcryptjs = require('bcryptjs');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-
   const user = await Users.findOne({ email });
+
   const checkPassword = bcryptjs.compareSync(password, user.password);
 
   if (!user || !checkPassword) {
     throw createError.Unauthorized('Wrong password or email, try again');
   }
-
   const { SECRET_KEY } = process.env;
   const payload = {
     id: user._id,

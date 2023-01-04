@@ -2,7 +2,12 @@ const express = require('express');
 const router = express.Router();
 const controlerWrapper = require('../../middlewares/controlerWrapper');
 const { users: ctrl } = require('../../controlers');
-const { registerSchema, updateSchema, auth } = require('../../middlewares');
+const {
+  registerSchema,
+  updateSchema,
+  auth,
+  upload,
+} = require('../../middlewares');
 const schemaVlidation = require('../../middlewares/schemaVlidation');
 
 router.post(
@@ -20,6 +25,14 @@ router.post(
 router.get('/current', auth, controlerWrapper(ctrl.current));
 
 router.post('/logout', auth, controlerWrapper(ctrl.logout));
+
+router.patch(
+  '/avatar',
+  auth,
+  upload.single('avatar'),
+  schemaVlidation(updateSchema),
+  controlerWrapper(ctrl.updateAvatar)
+);
 
 router.patch(
   '/:userId',

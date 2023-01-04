@@ -10,7 +10,10 @@ const getAll = async (req, res, next) => {
   }).populate('owner', 'email subscription');
 
   if (favorite !== undefined) {
-    result = result.filter(item => String(item.favorite) === String(favorite));
+    result = await Contacts.find({ owner: _id, favorite }, '', {
+      skip,
+      limit: Number(limit),
+    }).populate('owner', 'email subscription');
   }
 
   res.json({

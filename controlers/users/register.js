@@ -1,9 +1,11 @@
 const { Users } = require('../../models');
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
+const gravatar = require('gravatar');
 
 const register = async (req, res) => {
   const { email, password, subscription } = req.body;
+  const avatarURL = gravatar.url(email, { s: '250' });
   const user = await Users.findOne({ email });
   if (user) {
     throw createError.Conflict(`User with email ${email} exist`);
@@ -14,6 +16,7 @@ const register = async (req, res) => {
     email,
     password: hashedPassword,
     subscription,
+    avatarURL,
   });
 
   res.status(201).json({
@@ -23,6 +26,7 @@ const register = async (req, res) => {
         email: result.email,
         id: result._id,
         subscription: result.subscription,
+        avatarURL: result.avatarURL,
       },
     },
   });
