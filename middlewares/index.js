@@ -2,7 +2,11 @@ const schemaVlidation = require('./schemaVlidation');
 const controlerWrapper = require('./controlerWrapper');
 const auth = require('./auth');
 const upload = require('./multer');
-const { registerSchema, updateSchema } = require('./usersSchemaJoi');
+const {
+  registerSchema,
+  updateSchema,
+  verifyEmailSchema,
+} = require('./usersSchemaJoi');
 const {
   contactsAddSchema,
   contactsUpdateSchema,
@@ -17,4 +21,5 @@ module.exports = {
   contactsUpdateSchema,
   registerSchema,
   updateSchema,
+  verifyEmailSchema,
 };

@@ -1,6 +1,6 @@
 const app = require('../../app');
 const request = require('supertest');
-require('dotenv').config();
+// require('dotenv').config();
 const { Users } = require('../../models');
 const bcrypt = require('bcryptjs');
 

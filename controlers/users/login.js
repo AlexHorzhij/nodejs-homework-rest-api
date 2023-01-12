@@ -1,5 +1,5 @@
 const { Users } = require('../../models');
-const createError = require('http-errors');
+const { Unauthorized, Forbidden } = require('http-errors');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
@@ -10,7 +10,10 @@ const login = async (req, res) => {
   const checkPassword = bcryptjs.compareSync(password, user.password);
 
   if (!user || !checkPassword) {
-    throw createError.Unauthorized('Wrong password or email, try again');
+    throw Unauthorized('Wrong password or email, try again');
+  }
+  if (!user.verify) {
+    throw Forbidden('Email not verify');
   }
   const { SECRET_KEY } = process.env;
   const payload = {

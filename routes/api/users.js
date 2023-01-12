@@ -5,6 +5,7 @@ const { users: ctrl } = require('../../controlers');
 const {
   registerSchema,
   updateSchema,
+  verifyEmailSchema,
   auth,
   upload,
 } = require('../../middlewares');
@@ -39,6 +40,14 @@ router.patch(
   auth,
   schemaVlidation(updateSchema),
   controlerWrapper(ctrl.updateSubscription)
+);
+
+router.get('/verify/:verificationToken', controlerWrapper(ctrl.verifyEmail));
+
+router.post(
+  '/verify',
+  schemaVlidation(verifyEmailSchema),
+  controlerWrapper(ctrl.resendVerifyEmail)
 );
 
 module.exports = router;
