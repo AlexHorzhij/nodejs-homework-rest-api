@@ -15,12 +15,9 @@ const resendVerifyEmail = async (req, res) => {
   if (user.verify) {
     throw BadRequest('Verification has already been passed');
   }
-  const data = {
-    to: email,
-    subject: 'Email verify',
-    html: `<a href="http://localhost:3000/api/users/verify/${user.verificationToken}">Follow this link for verify your email</a>`,
-  };
-  await sendEmail(data);
+
+  sendEmail(email, user.verificationToken);
+
   res.status(200).json({
     status: '200 OK',
     message: 'Verification email sent',

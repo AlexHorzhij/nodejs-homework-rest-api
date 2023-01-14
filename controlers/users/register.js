@@ -13,15 +13,12 @@ const register = async (req, res) => {
   if (user) {
     throw createError.Conflict(`User with email ${email} exist`);
   }
-  const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-  const verificationToken = nanoid();
 
-  const data = {
-    to: email,
-    subject: 'Email verify',
-    html: `<a href="http://localhost:3000/api/users/verify/${verificationToken}">Follow this link for verify your email</a>`,
-  };
-  await sendEmail(data);
+  const verificationToken = nanoid();
+  sendEmail(email, verificationToken);
+
+  const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
   const result = await Users.create({
     email,
     password: hashedPassword,
@@ -39,6 +36,8 @@ const register = async (req, res) => {
         id: result._id,
         subscription: result.subscription,
         avatarURL: result.avatarURL,
+        verificationToken: result.verificationToken,
+        verify: result.verify,
       },
     },
   });
