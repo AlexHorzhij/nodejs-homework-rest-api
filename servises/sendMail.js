@@ -10,7 +10,7 @@ const sendEmail = async (email, verificationToken) => {
     from: EMAIL,
     to: email,
     subject: 'Email verify',
-    html: `<a href="${BASE_URL}/api/users/verify/${verificationToken}">Follow this link for verify your email</a>`,
+    html: `<a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blank">Follow this link for verify your email</a>`,
   };
 
   try {
